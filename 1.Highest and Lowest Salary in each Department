@@ -1,0 +1,40 @@
+
+### Creating sample data for Employee Table
+create table employee
+(
+emp_name varchar(10),
+dep_id int,
+salary int
+);
+delete from employee;
+insert into employee values 
+('Siva',1,30000),('Ravi',2,40000),('Prasad',1,50000),('Sai',2,20000);
+
+## Code starts from here
+### Step 1: Created a CTE and written a logic to derive dep wise which emp is having maximum/minimum salary . 
+## Step 2: Find salary difference
+## Step 3: Find the emp_name and dep_id having max and min salary
+## Step 4: Perform an inner join on dep_id to get the highest and lowest salaried employee
+
+
+WITH Max_MinSal AS (
+Select *,
+Salary-Max(salary) over (partition by dep_id order by emp_name) AS MAX_Salary_diff,
+Salary-Min(salary) over (partition by dep_id order by emp_name desc) AS Min_Salary_diff
+from employee
+),
+
+MAX_sal AS (
+Select emp_name As emp_name_max_salary, dep_id
+from Max_MinSal 
+where MAX_Salary_diff=0
+),
+
+MIN_Sal AS (
+Select emp_name As emp_name_min_salary, dep_id
+from Max_MinSal 
+where Min_Salary_diff=0
+)
+
+
+Select MX.dep_id,MX.emp_name_max_salary,MN.emp_name_min_salary from MAX_sal MX Inner Join MIN_Sal MN on MX.dep_id=MN.dep_id
