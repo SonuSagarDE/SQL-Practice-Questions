@@ -1,0 +1,24 @@
+## A recursive CTE is a subquery which refer to itself using its own name.
+The recursive CTEs are defined using WITH RECURSIVE clause.
+There should be a terminating condition to recursive CTE.
+The recursive CTEs are used for series generation and traversal of hierarchical or tree-structured data.
+
+## MySQL Syntax
+
+With recursive CTE AS
+(
+Select 1 as num -- anchor query
+UNION ALL
+SELECT num+1 -- recursive query
+FROM CTE
+where num<6
+)
+Select num from CTE;
+
+Output:
+1
+2
+3
+4
+5
+6
