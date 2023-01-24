@@ -22,3 +22,14 @@ Output:
 4
 5
 6
+
+## MS SQL Syntax
+With CTE AS
+(
+Select 1 as num -- anchor query
+UNION ALL
+SELECT num+1 -- recursive query
+FROM CTE
+where num<6
+)
+Select num from CTE
