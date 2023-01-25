@@ -8,7 +8,7 @@ salary int
 );
 delete from employee;
 insert into employee values 
-('Siva',1,30000),('Ravi',2,40000),('Prasad',1,50000),('Sai',2,20000);
+('Siva',1,30000),('Ravi',2,40000),('Prasad',1,50000),('Sai',2,20000),('Raj',25000);
 
 ## Code starts from here
 ### Step 1: Created a CTE and written a logic to derive dep wise which emp is having maximum/minimum salary . 
