@@ -28,3 +28,14 @@ insert into employee112 values (1,'A',2341),
 , (17,'C',65);
 
 
+WITH CTE AS (
+Select *,
+row_number() over (partition by company order by salary) as rn,
+count(1) over (partition by company) as total_count
+from employee112
+order by company,salary
+)
+Select company,avg(salary) 
+from CTE
+Where rn between total_count*1.0/2 and (total_count*1.0/2)+1
+group by company
