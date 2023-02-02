@@ -11,3 +11,20 @@ amount int
 
 insert into spending values(1,'2019-07-01','mobile',100),(1,'2019-07-01','desktop',100),(2,'2019-07-01','mobile',100)
 ,(2,'2019-07-02','mobile',100),(3,'2019-07-01','desktop',100),(3,'2019-07-02','desktop',100);
+
+WITH All_spend AS (
+Select spend_date,user_id,max(platform) as Platform,sum(amount) as amount
+from spending
+group by spend_date,user_id 
+having count(1)=1
+UNION ALL
+Select spend_date,user_id,'both'as Platform,sum(amount) as amount
+from spending
+group by spend_date,user_id 
+having count(1)=2
+UNION ALL
+Select distinct spend_date,null as user_id,'both' as Platform,0 as amount from spending
+)
+Select spend_date,Platform,Sum(amount) as Total_amount, count(distinct user_id) as total_users  from All_spend
+Group by spend_date,Platform
+Order by spend_date,Platform desc
