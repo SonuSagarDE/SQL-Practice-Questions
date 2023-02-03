@@ -6,3 +6,15 @@ city varchar(20)
 delete from players_location;
 insert into players_location
 values ('Sachin','Mumbai'),('Virat','Delhi') , ('Rahul','Bangalore'),('Rohit','Mumbai'),('Mayank','Bangalore');
+
+ WITH CTE AS (
+Select *,
+row_number() over (partition by city order by name asc) as grp
+from players_location)
+
+Select 
+MAX(CASE WHEN city='Bangalore' then name end )as Bangalore,
+MAX(CASE WHEN city='Delhi' then name end) as Delhi,
+MAX(CASE WHEN city='Mumbai' then name end) as Mumbai
+from CTE
+group by grp
