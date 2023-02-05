@@ -15,3 +15,15 @@ insert into bms values
 ,(13,'Y')
 ,(14,'Y');
 select * from bms;
+-- Method 1: Three or more consecutive empty seats
+Select * from
+(
+Select *,
+lag(is_empty,1) over (order by seat_no ) as prev_1,
+lag(is_empty,2) over (order by seat_no ) as prev_2,
+lead(is_empty,1) over (order by seat_no ) as nxt_1,
+lead(is_empty,2) over (order by seat_no ) as nxt_2
+from bms) A 
+where is_empty='Y' and prev_1='Y' and prev_2='Y'
+or (is_empty='Y' and nxt_1='Y' and nxt_2='Y')
+or (is_empty='Y' and prev_1='Y' and nxt_1='Y');
