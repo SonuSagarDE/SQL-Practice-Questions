@@ -9,3 +9,14 @@ INSERT INTO icc_world_cup values('SL','Aus','Aus');
 INSERT INTO icc_world_cup values('SA','Eng','Eng');
 INSERT INTO icc_world_cup values('Eng','NZ','NZ');
 INSERT INTO icc_world_cup values('Aus','India','India');
+
+Select * from icc_world_cup;
+Select Team_name,count(1) AS No_of_match_played,Sum(win_Flag) as No_of_wins,count(1)-Sum(win_Flag) as No_of_losses
+from
+(
+Select Team_1 AS Team_name, case when Team_1 = Winner then 1 else 0 end as win_Flag from icc_world_cup
+UNION ALL 
+Select Team_2 AS Team_name, case when Team_2 = Winner then 1 else 0 end as win_Flag from icc_world_cup
+) A
+GROUP BY Team_name
+ORDER BY No_of_wins desc;
