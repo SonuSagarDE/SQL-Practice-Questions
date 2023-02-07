@@ -1,0 +1,7 @@
+CREATE TABLE marketing_campaign(
+ user_id int NULL,
+ created_at date NULL,
+ product_id int NULL,
+ quantity int NULL,
+ price int NULL
+);
