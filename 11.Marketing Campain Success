@@ -108,3 +108,11 @@ insert into marketing_campaign values (10,'2019-01-01',101,3,55),
 (65,'2019-03-27',103,4,79),
 (66,'2019-03-31',107,2,27),
 (67,'2019-03-31',102,5,82);
+
+-- Solution
+WITH CTE_rank AS (
+Select *,
+Rank() over (partition by user_id order by created_at) as rnk
+from marketing_campaign
+-- where user_id IN (11,14,25)
+)
