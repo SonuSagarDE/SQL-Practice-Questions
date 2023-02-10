@@ -40,3 +40,10 @@ group by dept_name;
 select e.*,
 max(salary) over(partition by dept_name) as max_salary
 from employee e;
+
+-- row_number(), rank() and dense_rank()
+select e.*,
+row_number() over(partition by dept_name) as rn
+rank() over(partition by dept_name order by salary desc) as rnk,
+dense_rank() over(partition by dept_name order by salary desc) as dense_rnk,
+from employee e;
