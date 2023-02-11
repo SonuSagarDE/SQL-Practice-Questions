@@ -114,7 +114,7 @@ WITH CTE_rank AS (
 Select *,
 Rank() over (partition by user_id order by created_at) as rnk
 from marketing_campaign
--- where user_id IN (11,14,25)
+-- where user_id IN (11,14,25) to test the code
 ),
 first_prod_purchase AS (
 Select * from CTE_rank where rnk=1
@@ -125,4 +125,4 @@ Select * from CTE_rank where rnk>1
 Select a.user_id -- a.created_at,a.product_id 
 from except_first_prod_purchase a
 Left Join first_prod_purchase b on a.user_id=b.user_id and a.product_id=b.product_id
-where b.user_id IS NULL
+where b.user_id IS NULL 
