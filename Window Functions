@@ -47,3 +47,13 @@ row_number() over(partition by dept_name) as rn
 rank() over(partition by dept_name order by salary desc) as rnk,
 dense_rank() over(partition by dept_name order by salary desc) as dense_rnk,
 from employee e;
+
+-- lead and lag
+
+-- fetch a query to display if the salary of an employee is higher, lower or equal to the previous employee.
+select e.*,
+lag(salary) over(partition by dept_name order by emp_id) as prev_empl_sal,
+case when e.salary > lag(salary) over(partition by dept_name order by emp_id) then 'Higher than previous employee'
+     when e.salary < lag(salary) over(partition by dept_name order by emp_id) then 'Lower than previous employee'
+	 when e.salary = lag(salary) over(partition by dept_name order by emp_id) then 'Same than previous employee' end as sal_range
+from employee e;
