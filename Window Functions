@@ -57,3 +57,9 @@ case when e.salary > lag(salary) over(partition by dept_name order by emp_id) th
      when e.salary < lag(salary) over(partition by dept_name order by emp_id) then 'Lower than previous employee'
 	 when e.salary = lag(salary) over(partition by dept_name order by emp_id) then 'Same than previous employee' end as sal_range
 from employee e;
+
+-- Similarly using lead function to see how it is different from lag.
+select e.*,
+lag(salary) over(partition by dept_name order by emp_id) as prev_empl_sal,
+lead(salary) over(partition by dept_name order by emp_id) as next_empl_sal
+from employee e;
