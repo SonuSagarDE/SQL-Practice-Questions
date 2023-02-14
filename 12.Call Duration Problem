@@ -17,3 +17,12 @@ insert into call_end_logs values
 ('PN1','2022-01-01 10:45:00'),('PN1','2022-01-01 17:05:00'),('PN2','2022-01-01 12:55:00')
 ,('PN3','2022-01-02 10:20:00'),('PN3','2022-01-02 12:50:00'),('PN3','2022-01-03 09:40:00')
 ;
+-- Solution
+WITH CTE_Phone_start AS(
+Select *,
+concat(phone_number , (row_number() over (partition by phone_number order by start_time))) As Key_Phone_row
+from call_start_logs)
+,CTE_Phone_End AS (
+Select * ,
+concat(phone_number ,row_number() over (partition by phone_number order by end_time)) As Key_Phone_row
+from call_end_logs)
