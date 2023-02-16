@@ -31,7 +31,7 @@ insert into employee values(123, 'Vikram', 'IT', 8000);
 insert into employee values(124, 'Dheeraj', 'IT', 11000);
 COMMIT;
 
--- Using Aggregate function as Window Function
+-- Using Aggregate function as Window Functions
 -- Without window function, SQL will reduce the no of records.
 select dept_name, max(salary) from employee
 group by dept_name;
