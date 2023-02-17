@@ -17,3 +17,10 @@ Select min(date_value) as start_date, max(date_value) as end_date ,state
 from CTE
 group by group_date,state
 order by date_value;
+-- Soultion 2 using Subquery
+select min(date_value) as start_date,max(date_value) as end_date,state
+ from 
+(
+select date_value,state,row_number() over(partition by state order by date_value) as rn 
+from tasks order by date_value
+)a group by date_sub(date_value,interval rn day);
