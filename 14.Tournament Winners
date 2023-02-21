@@ -30,3 +30,10 @@ insert into matches values (2,30,25,1,2);
 insert into matches values (3,30,15,2,0);
 insert into matches values (4,40,20,5,2);
 insert into matches values (5,35,50,1,1);
+-- Solution
+WITH Players_Score AS (
+Select first_player As player_id,first_score As Score
+from matches
+UNION ALL
+Select second_player As player_id,second_score As Score
+from matches
