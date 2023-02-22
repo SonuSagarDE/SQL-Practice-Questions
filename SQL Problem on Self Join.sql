@@ -15,10 +15,13 @@ Insert into Trade_tbl Values
 ('TRADE4','10:01:09','ITJunction4All',300,32),
 ('TRADE5','10:10:00','ITJunction4All',-100,19),
 ('TRADE6','10:10:01','ITJunction4All',-300,19);
-
-Select t1.TRADE_ID as First_Trade,t1.Trade_Timestamp,t1.Price,t2.TRADE_ID as Second_Trade,
-t2.Price,t2.Trade_Timestamp
+-- solution
+Select t1.TRADE_ID as First_Trade,t1.Trade_Timestamp,t1.Price as First_Price,t2.TRADE_ID as Second_Trade,
+t2.Price as Second_Price,t2.Trade_Timestamp,
+abs(((t1.Price-t2.Price)*1.0/t1.Price)*100) As Diff_per
 from Trade_tbl t1
 Inner Join Trade_tbl t2 on 1=1
-where t1.Trade_Timestamp<t2.Trade_Timestamp and TIME_TO_SEC(timediff(t2.Trade_Timestamp,t1.Trade_Timestamp))<10
-Order by t1.TRADE_ID
+where t1.Trade_Timestamp<t2.Trade_Timestamp 
+and TIME_TO_SEC(timediff(t2.Trade_Timestamp,t1.Trade_Timestamp))<10
+and abs(((t1.Price-t2.Price)*1.0/t1.Price)*100)>10 
+Order by t1.TRADE_ID;
