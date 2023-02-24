@@ -1,0 +1,4 @@
+# write a query to find the total number of people present in hostpials#
+create table hospital ( emp_id int
+, action varchar(10)
+, time datetime);
