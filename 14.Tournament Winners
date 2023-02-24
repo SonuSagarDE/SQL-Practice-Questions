@@ -37,3 +37,15 @@ from matches
 UNION ALL
 Select second_player As player_id,second_score As Score
 from matches
+), Player_group_score AS (
+Select p.group_id,ps.player_id,sum(Score) As Total_Score
+from Players_Score ps
+Inner Join players p on ps.player_id=p.player_id
+group by ps.player_id
+), final_rank AS (
+Select * ,
+rank() over (partition by group_id order by Total_Score desc,player_id asc) as rnk
+from Player_group_score
+)
+Select group_id,player_id,Total_Score from final_rank where rnk=1
+
