@@ -14,3 +14,12 @@ insert into hospital values ('3', 'out', '2019-12-22 09:30:00');
 insert into hospital values ('3', 'in', '2019-12-22 09:45:00');
 insert into hospital values ('4', 'in', '2019-12-22 09:45:00');
 insert into hospital values ('5', 'out', '2019-12-22 09:40:00');
+
+# Solution1
+with CTE as (
+Select *,
+row_number() over (partition by emp_id order by time desc) As row_id
+from hospital 
+)
+ Select emp_id from CTE where row_id=1 and action='in';
+ 
