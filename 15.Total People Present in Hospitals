@@ -31,3 +31,24 @@ from hospital
 group by emp_id
 having max(CASE when action='in' then time end)> max(CASE WHEN action='out' then time end)
 or max(CASE WHEN action='out' then time end) is null;
+
+# Solution3 Using Joins
+With In_time AS
+(
+Select emp_id,
+Max(time) as in_time
+from hospital
+where action='in'
+group by emp_id
+),
+Out_time AS
+(
+Select emp_id,
+Max(time) as out_time
+from hospital
+where action='out'
+group by emp_id
+)
+Select IT.emp_id,IT.in_time from In_time IT
+Left Join Out_time OT on IT.emp_id=IT.empid and IT.in_time=IT.out_time
+
