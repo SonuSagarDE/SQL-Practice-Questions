@@ -23,3 +23,11 @@ from hospital
 )
  Select emp_id from CTE where row_id=1 and action='in';
  
+ #Solution2  Having 
+ Select emp_id,
+max(CASE when action='in' then time end) as in_time,
+max(CASE WHEN action='out' then time end) as out_time
+from hospital
+group by emp_id
+having max(CASE when action='in' then time end)> max(CASE WHEN action='out' then time end)
+or max(CASE WHEN action='out' then time end) is null;
