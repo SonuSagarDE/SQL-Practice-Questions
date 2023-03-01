@@ -14,3 +14,6 @@ create table holidays
 holiday_date date
 ,reason varchar(100)
 );
+
+insert into holidays values
+('2022-08-11','Rakhi'),('2022-08-15','Independence day');
