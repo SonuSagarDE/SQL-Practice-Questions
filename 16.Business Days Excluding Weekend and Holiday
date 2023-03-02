@@ -17,3 +17,10 @@ holiday_date date
 
 insert into holidays values
 ('2022-08-11','Rakhi'),('2022-08-15','Independence day');
+# Solution   when tickets are raise in weekdays
+with Holidays as (
+Select ticket_id,create_date,resolved_date,count(holiday_date) as No_of_holidays 
+from Tickets
+Left Join holidays on holiday_date between create_date and resolved_date
+group by ticket_id,create_date,resolved_date
+)
