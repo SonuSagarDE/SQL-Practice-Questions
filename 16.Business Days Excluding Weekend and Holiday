@@ -24,3 +24,7 @@ from Tickets
 Left Join holidays on holiday_date between create_date and resolved_date
 group by ticket_id,create_date,resolved_date
 )
+Select H.ticket_id,H.create_date,H.resolved_date,
+ ((datediff(T.resolved_date,T.create_date)-2*floor(datediff(T.resolved_date,T.create_date)/7)) - H.No_of_holidays ) As Days
+from Holidays H
+Inner Join Tickets T on T.ticket_id=H.ticket_id 
