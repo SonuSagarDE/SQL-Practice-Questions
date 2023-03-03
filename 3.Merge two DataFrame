@@ -1,3 +1,0 @@
-## How to merge two Data Frame
--- Use Union to merge two DF, if both does not have same number of columns insert column and assign null .
-
