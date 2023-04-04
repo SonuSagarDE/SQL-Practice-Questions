@@ -34,6 +34,10 @@ create table activity (
  from activity )
  Select player_id,event_date,device_id from CTE where rnk=1;
  
- --
- 
+ -- q3: Write an SQL query that reports for each player and date, how many games played so far by the player. 
+-- That is, the total number of games played by the player until that date.
+  Select player_id,event_date,device_id,
+ sum(games_played) over (partition by player_id order by event_date ) as total_game_played
+ from activity 
+
  
