@@ -38,6 +38,14 @@ create table activity (
 -- That is, the total number of games played by the player until that date.
   Select player_id,event_date,device_id,
  sum(games_played) over (partition by player_id order by event_date ) as total_game_played
- from activity 
-
- 
+ from activity ;
+-- q4: Write an SQL query that reports the fraction of players that logged in again 
+--  on the day after the day they first logged in, rounded to 2 decimal places
+With cte_min_date As (
+select player_id, min(event_date) as first_login from activity group by player_id
+)
+-- select t2.* from cte_min_date t1 checking the list
+select round( (select count(1) as cnt_1 from cte_min_date t1
+inner join activity t2 on t1.player_id=t2.player_id and date_add(t1.first_login,interval 1 day)=t2.event_date
+)/(select count(distinct player_id) from activity),2) as fraction
+-- 
