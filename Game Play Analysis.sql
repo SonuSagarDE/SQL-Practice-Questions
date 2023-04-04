@@ -20,3 +20,20 @@ create table activity (
  from activity )
  Select player_id,event_date from CTE where rnk=1;
  
+ -- O/P:
+ /*
+ 1	2016-03-01
+2	2017-06-25
+3	2016-03-02
+ */
+ -- Q2 Write a SQL query that reports the device that is first logged in for each player
+ WITH CTE AS
+ (
+ Select player_id,event_date,device_id,
+ rank() over (partition by player_id order by event_date ) as rnk
+ from activity )
+ Select player_id,event_date,device_id from CTE where rnk=1;
+ 
+ --
+ 
+ 
