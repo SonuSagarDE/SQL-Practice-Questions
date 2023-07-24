@@ -1,3 +1,5 @@
+## Find the minimum and Maximum date between state changes
+
 create table tasks (
 date_value date,
 state varchar(10)
